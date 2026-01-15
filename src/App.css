@@ -1,205 +1,255 @@
-/* ===============================
-   GLOBAL STYLES
-================================ */
-
+/* ========== RESET & BASE ========== */
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
-  background: #fff6f2;
-  font-family: "Caveat", cursive;
-  color: #5c3a2e;
+  font-family: "Poppins", sans-serif;
+  background: #fdeef5;
+  height: 100vh;
+  overflow: hidden;
 }
 
-/* ===============================
-   HEADER
-================================ */
-
-header {
-  padding: 16px 24px;
-  background: #ffffff;
-  border-bottom: 1px solid #f0dcdc;
+/* ========== APP LAYOUT ========== */
+.app {
   display: flex;
-  justify-content: space-between;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ========== LEFT PANEL ========== */
+.left-panel {
+  width: 260px;
+  background: #fff;
+  padding: 16px;
+  overflow-y: auto;
+  border-right: 1px solid #f2cfe0;
+}
+
+.left-panel h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  color: #6a2c4c;
+}
+
+.left-panel section {
+  margin-bottom: 24px;
+}
+
+.left-panel h3 {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #8b4a6b;
+}
+
+/* Item Grid */
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.item-grid img {
+  width: 100%;
+  padding: 6px;
+  background: #fff;
+  border-radius: 12px;
+  cursor: grab;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.item-grid img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* Active Vase */
+.item-grid img.active {
+  outline: 2px solid #e88bb5;
+  outline-offset: 2px;
+}
+
+/* ========== CANVAS AREA ========== */
+.canvas-area {
+  flex: 1;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 28px;
+/* Canvas */
+.canvas {
+  width: 720px;
+  height: 520px;
+  background: #fffdf7;
+  border-radius: 24px;
+  position: relative;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
 }
 
-header p {
-  margin: 4px 0 0;
-  font-size: 16px;
-  opacity: 0.85;
+/* Fixed Vase */
+.vase-fixed {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 170px;
+  pointer-events: none;
 }
 
-.actions button {
-  margin-left: 10px;
+/* Dropped Elements */
+.canvas-item {
+  position: absolute;
+  width: 80px;
+  cursor: move;
+  user-select: none;
+  transition: transform 0.1s ease;
 }
 
-/* ===============================
-   APP LAYOUT
-================================ */
-
-.app {
-  display: grid;
-  grid-template-columns: 260px 1fr 300px;
-  height: calc(100vh - 90px);
+.canvas-item:hover {
+  transform: scale(1.05);
 }
 
-/* ===============================
-   PANELS
-================================ */
-
-.panel {
+/* ========== RIGHT PANEL ========== */
+.right-panel {
+  width: 260px;
+  background: #fff;
   padding: 16px;
-  background: #ffffff;
-  overflow-y: auto;
+  border-left: 1px solid #f2cfe0;
 }
 
-.panel.left {
-  border-right: 1px solid #f0dcdc;
+.right-panel h2 {
+  font-size: 20px;
+  margin-bottom: 12px;
+  color: #6a2c4c;
 }
 
-.panel.right {
-  border-left: 1px solid #f0dcdc;
+/* Letter Input */
+.right-panel textarea {
+  width: 100%;
+  height: 240px;
+  border-radius: 16px;
+  border: 1px solid #e6c3d3;
+  padding: 14px;
+  font-size: 14px;
+  resize: none;
+  background: #fffafc;
+  outline: none;
 }
 
-/* ===============================
-   LEFT PANEL (ELEMENTS)
-================================ */
+.right-panel textarea::placeholder {
+  color: #b67c9a;
+}
 
-.tabs {
+/* Focus effect */
+.right-panel textarea:focus {
+  border-color: #e88bb5;
+  box-shadow: 0 0 0 2px rgba(232, 139, 181, 0.2);
+}
+/* Handwritten fonts */
+.handwriting-1 {
+  font-family: "Comic Sans MS", cursive;
+}
+
+.handwriting-2 {
+  font-family: "Segoe Script", cursive;
+}
+
+.handwriting-3 {
+  font-family: "Brush Script MT", cursive;
+}
+
+/* Letter on canvas */
+.canvas-letter {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  max-width: 260px;
+  background: #fffafc;
+  padding: 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+  white-space: pre-wrap;
+}
+
+/* Controls */
+.right-panel select {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.button-group {
   display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.button-group button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: #e88bb5;
+  color: white;
+}
+
+/* Font Picker */
+.font-picker {
+  display: flex;
+  flex-direction: column;
   gap: 8px;
   margin-bottom: 12px;
 }
 
-.tabs button {
-  flex: 1;
-  padding: 8px;
-  border-radius: 10px;
-  border: none;
-  background: #fde1dc;
+.font-option {
+  padding: 12px;
   cursor: pointer;
-  font-family: inherit;
+  font-size: 16px;
+  transition: background 0.2s ease;
 }
 
-.elements {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+.font-option:hover {
+  background: #fff3f8;
 }
 
-.elements img {
-  width: 100%;
+.font-option.active {
+  border-color: #e88bb5;
+  background: #ffe3ef;
+}
+
+.font-dropdown {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.font-selected {
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid #e6c3d3;
+  background: #fff;
   cursor: pointer;
-  border-radius: 12px;
-  transition: transform 0.2s ease;
-}
-
-.elements img:hover {
-  transform: scale(1.05);
-}
-
-/* ===============================
-   CANVAS AREA
-================================ */
-
-.canvas-area {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  background: #fffaf7;
+  font-size: 16px;
 }
 
-#canvas {
-  width: 720px;
-  height: 520px;
-  background: #fffdfb;
-  border-radius: 18px;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-}
-
-/* ===============================
-   RIGHT PANEL (LETTER + VASE)
-================================ */
-
-.panel.right h3 {
-  margin-top: 0;
-}
-
-select {
-  width: 100%;
-  padding: 8px;
-  border-radius: 10px;
-  border: 1px solid #e6cfcf;
-  margin-bottom: 10px;
-  font-family: inherit;
-}
-
-textarea {
-  width: 100%;
-  height: 110px;
-  padding: 10px;
-  border-radius: 12px;
-  border: 1px solid #e6cfcf;
-  resize: none;
-  font-family: inherit;
-}
-
-button {
-  margin-top: 10px;
-  padding: 10px 14px;
-  border-radius: 12px;
-  border: none;
-  background: #f2a6a6;
-  color: white;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-button:hover {
-  opacity: 0.9;
-}
-
-/* ===============================
-   VASE SELECTOR
-================================ */
-
-.vases {
-  display: flex;
-  gap: 12px;
-  margin-top: 10px;
-}
-
-.vases img {
-  width: 80px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.vases img:hover {
-  transform: scale(1.1);
-}
-
-/* ===============================
-   SMALL ENHANCEMENTS
-================================ */
-
-h3 {
-  margin-bottom: 8px;
-}
-
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #f2a6a6;
-  border-radius: 10px;
+.font-options {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  z-index: 50;
+  overflow: hidden;
 }
