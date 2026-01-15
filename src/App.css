@@ -153,3 +153,44 @@ button {
   background: #ff9ecb;
   cursor: pointer;
 }
+
+/* PAPER SELECTOR */
+.paper-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.paper-grid img {
+  width: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.paper-grid img.active {
+  border-color: #e4a2ad;
+}
+
+/* LETTER ON CANVAS */
+.letter-wrapper {
+  position: relative;
+}
+
+.paper-img {
+  width: 260px;
+  pointer-events: none;
+}
+
+.letter-text {
+  position: absolute;
+  top: 40px;
+  left: 30px;
+  width: 200px;
+  font-size: 18px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: #5a3a3a;
+  pointer-events: none;
+}

@@ -11,7 +11,14 @@ const FONTS = [
 ];
 
 export default function App() {
-  /* Assets (public folder) */
+  /* Assets */
+  const PAPERS = [
+    { name: "Pink Bow", src: "/assets/papers/paper1.jpg" },
+    { name: "Vintage Lines", src: "/assets/papers/paper2.png" },
+    { name: "Floral Border", src: "/assets/papers/paper3.png" },
+    { name: "Soft Beige", src: "/assets/papers/paper4.png" },
+  ];
+
   const vases = [
     "/assets/vases/vase1.png",
     "/assets/vases/vase2.png",
@@ -41,6 +48,7 @@ export default function App() {
   const [draggingId, setDraggingId] = useState(null);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
+  const [paper, setPaper] = useState(PAPERS[0]);
   const [letterText, setLetterText] = useState("");
   const [font, setFont] = useState(FONTS[0]);
   const [fontOpen, setFontOpen] = useState(false);
@@ -63,6 +71,7 @@ export default function App() {
       {
         id: Date.now() + Math.random(),
         src,
+        type: "image",
         x: e.clientX - rect.left - 50,
         y: e.clientY - rect.top - 50,
         rotation: 0,
@@ -90,7 +99,6 @@ export default function App() {
 
   const handleMouseMove = (e) => {
     if (!draggingId) return;
-
     const rect = canvasRef.current.getBoundingClientRect();
 
     setElements((els) =>
@@ -106,9 +114,7 @@ export default function App() {
     );
   };
 
-  const handleMouseUp = () => {
-    setDraggingId(null);
-  };
+  const handleMouseUp = () => setDraggingId(null);
 
   /* Controls */
   const rotate = (id, amt) =>
@@ -144,6 +150,27 @@ export default function App() {
   const deleteItem = (id) =>
     setElements((els) => els.filter((el) => el.id !== id));
 
+  /* Add Letter */
+  const addLetterToCanvas = () => {
+    if (!letterText.trim()) return;
+
+    setElements((prev) => [
+      ...prev,
+      {
+        id: Date.now() + Math.random(),
+        type: "letter",
+        text: letterText,
+        font,
+        paperSrc: paper.src,
+        x: 120,
+        y: 120,
+        rotation: 0,
+        scale: 1,
+        zIndex: prev.length + 1,
+      },
+    ]);
+  };
+
   /* Reset */
   const resetCanvas = () => {
     setElements([]);
@@ -152,7 +179,7 @@ export default function App() {
     setActiveId(null);
   };
 
-  /* Export PNG */
+  /* Export */
   const exportPNG = async () => {
     const canvas = await html2canvas(canvasRef.current, {
       backgroundColor: null,
@@ -186,36 +213,21 @@ export default function App() {
         <h3>Flowers</h3>
         <div className="item-grid">
           {flowers.map((f) => (
-            <img
-              key={f}
-              src={f}
-              draggable
-              onDragStart={(e) => handleDragStart(e, f)}
-            />
+            <img key={f} src={f} draggable onDragStart={(e) => handleDragStart(e, f)} />
           ))}
         </div>
 
         <h3>Leaves</h3>
         <div className="item-grid">
           {leaves.map((l) => (
-            <img
-              key={l}
-              src={l}
-              draggable
-              onDragStart={(e) => handleDragStart(e, l)}
-            />
+            <img key={l} src={l} draggable onDragStart={(e) => handleDragStart(e, l)} />
           ))}
         </div>
 
         <h3>Decor</h3>
         <div className="item-grid">
           {decor.map((d) => (
-            <img
-              key={d}
-              src={d}
-              draggable
-              onDragStart={(e) => handleDragStart(e, d)}
-            />
+            <img key={d} src={d} draggable onDragStart={(e) => handleDragStart(e, d)} />
           ))}
         </div>
       </aside>
@@ -235,9 +247,7 @@ export default function App() {
           {elements.map((el) => (
             <div
               key={el.id}
-              className={`canvas-item-wrapper ${
-                activeId === el.id ? "active" : ""
-              }`}
+              className={`canvas-item-wrapper ${activeId === el.id ? "active" : ""}`}
               style={{
                 left: el.x,
                 top: el.y,
@@ -246,13 +256,19 @@ export default function App() {
               }}
               onMouseDown={(e) => handleMouseDown(e, el.id)}
             >
-              <img src={el.src} draggable={false} />
+              {el.type === "letter" ? (
+                <div className="letter-wrapper">
+                  <img src={el.paperSrc} className="paper-img" />
+                  <div className="letter-text" style={{ fontFamily: el.font }}>
+                    {el.text}
+                  </div>
+                </div>
+              ) : (
+                <img src={el.src} draggable={false} />
+              )}
 
               {activeId === el.id && (
-                <div
-                  className="item-controls"
-                  onMouseDown={(e) => e.stopPropagation()}
-                >
+                <div className="item-controls" onMouseDown={(e) => e.stopPropagation()}>
                   <button onClick={() => rotate(el.id, -15)}>⟲</button>
                   <button onClick={() => rotate(el.id, 15)}>⟳</button>
                   <button onClick={() => scaleItem(el.id, 0.1)}>＋</button>
@@ -265,10 +281,6 @@ export default function App() {
             </div>
           ))}
 
-          <div className="canvas-letter" style={{ fontFamily: font }}>
-            {letterText}
-          </div>
-
           <img src={selectedVase} className="vase-fixed" />
         </div>
       </main>
@@ -276,6 +288,18 @@ export default function App() {
       {/* RIGHT PANEL */}
       <aside className="right-panel">
         <h2>Letter</h2>
+
+        <h4>Choose Paper</h4>
+        <div className="paper-grid">
+          {PAPERS.map((p) => (
+            <img
+              key={p.name}
+              src={p.src}
+              className={paper.name === p.name ? "active" : ""}
+              onClick={() => setPaper(p)}
+            />
+          ))}
+        </div>
 
         <div className="font-dropdown">
           <div
@@ -311,6 +335,8 @@ export default function App() {
           placeholder="Write your letter..."
           style={{ fontFamily: font }}
         />
+
+        <button onClick={addLetterToCanvas}>Add it to Canvas</button>
 
         <div className="button-group">
           <button onClick={resetCanvas}>Reset</button>
