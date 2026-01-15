@@ -1,0 +1,205 @@
+/* ===============================
+   GLOBAL STYLES
+================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #fff6f2;
+  font-family: "Caveat", cursive;
+  color: #5c3a2e;
+}
+
+/* ===============================
+   HEADER
+================================ */
+
+header {
+  padding: 16px 24px;
+  background: #ffffff;
+  border-bottom: 1px solid #f0dcdc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+header p {
+  margin: 4px 0 0;
+  font-size: 16px;
+  opacity: 0.85;
+}
+
+.actions button {
+  margin-left: 10px;
+}
+
+/* ===============================
+   APP LAYOUT
+================================ */
+
+.app {
+  display: grid;
+  grid-template-columns: 260px 1fr 300px;
+  height: calc(100vh - 90px);
+}
+
+/* ===============================
+   PANELS
+================================ */
+
+.panel {
+  padding: 16px;
+  background: #ffffff;
+  overflow-y: auto;
+}
+
+.panel.left {
+  border-right: 1px solid #f0dcdc;
+}
+
+.panel.right {
+  border-left: 1px solid #f0dcdc;
+}
+
+/* ===============================
+   LEFT PANEL (ELEMENTS)
+================================ */
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 8px;
+  border-radius: 10px;
+  border: none;
+  background: #fde1dc;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.elements {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.elements img {
+  width: 100%;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+}
+
+.elements img:hover {
+  transform: scale(1.05);
+}
+
+/* ===============================
+   CANVAS AREA
+================================ */
+
+.canvas-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fffaf7;
+}
+
+#canvas {
+  width: 720px;
+  height: 520px;
+  background: #fffdfb;
+  border-radius: 18px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* ===============================
+   RIGHT PANEL (LETTER + VASE)
+================================ */
+
+.panel.right h3 {
+  margin-top: 0;
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid #e6cfcf;
+  margin-bottom: 10px;
+  font-family: inherit;
+}
+
+textarea {
+  width: 100%;
+  height: 110px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #e6cfcf;
+  resize: none;
+  font-family: inherit;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: none;
+  background: #f2a6a6;
+  color: white;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+/* ===============================
+   VASE SELECTOR
+================================ */
+
+.vases {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.vases img {
+  width: 80px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.vases img:hover {
+  transform: scale(1.1);
+}
+
+/* ===============================
+   SMALL ENHANCEMENTS
+================================ */
+
+h3 {
+  margin-bottom: 8px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #f2a6a6;
+  border-radius: 10px;
+}
