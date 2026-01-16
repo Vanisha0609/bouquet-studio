@@ -22,6 +22,9 @@ export default function App() {
   const vases = [
     "/assets/vases/vase1.png",
     "/assets/vases/vase2.png",
+    "/assets/vases/vase3.png",
+    "/assets/vases/vase4.png",
+    "/assets/vases/vase5.png",
   ];
 
   const flowers = [
@@ -33,6 +36,8 @@ export default function App() {
   const leaves = [
     "/assets/leaves/leaf1.png",
     "/assets/leaves/leaf2.png",
+    "/assets/leaves/leaf3.png",
+    "/assets/leaves/leaf4.png",
   ];
 
   const decor = [
@@ -169,7 +174,6 @@ export default function App() {
         zIndex: prev.length + 1,
       },
     ]);
-    //setLetterText("");
   };
 
   /* Reset */
@@ -195,155 +199,207 @@ export default function App() {
 
   return (
     <div className="app">
-      {/* LEFT PANEL */}
-      <aside className="left-panel">
-        <h2>Library</h2>
-
-        <h3>Vases</h3>
-        <div className="item-grid">
-          {vases.map((v) => (
-            <img
-              key={v}
-              src={v}
-              className={selectedVase === v ? "active" : ""}
-              onClick={() => setSelectedVase(v)}
-            />
-          ))}
+      {/* HEADER */}
+      <header className="app-header">
+        <div className="header-left">
+          <span className="logo">🌸</span>
+          <h1>PetalPost</h1>
         </div>
 
-        <h3>Flowers</h3>
-        <div className="item-grid">
-          {flowers.map((f) => (
-            <img key={f} src={f} draggable onDragStart={(e) => handleDragStart(e, f)} />
-          ))}
+        <div className="header-center">
+          <p>Create a handmade bouquet & letter 💌</p>
         </div>
 
-        <h3>Leaves</h3>
-        <div className="item-grid">
-          {leaves.map((l) => (
-            <img key={l} src={l} draggable onDragStart={(e) => handleDragStart(e, l)} />
-          ))}
+        <div className="header-right">
+          <button className="header-btn" onClick={exportPNG}>
+            Download
+          </button>
         </div>
+      </header>
 
-        <h3>Decor</h3>
-        <div className="item-grid">
-          {decor.map((d) => (
-            <img key={d} src={d} draggable onDragStart={(e) => handleDragStart(e, d)} />
-          ))}
-        </div>
-      </aside>
+      {/* BODY */}
+      <div className="app-body">
+        {/* LEFT PANEL */}
+        <aside className="left-panel">
+          <h2>Library</h2>
 
-      {/* CANVAS */}
-      <main className="canvas-area">
-        <div
-          className="canvas"
-          ref={canvasRef}
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={handleDrop}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-          onMouseDown={() => setActiveId(null)}
-        >
-          {elements.map((el) => (
-            <div
-              key={el.id}
-              className={`canvas-item-wrapper ${activeId === el.id ? "active" : ""}`}
-              style={{
-                left: el.x,
-                top: el.y,
-                zIndex: el.zIndex,
-                transform: `rotate(${el.rotation}deg) scale(${el.scale})`,
-              }}
-              onMouseDown={(e) => handleMouseDown(e, el.id)}
-            >
-              {el.type === "letter" ? (
-                <div className="letter-wrapper">
-                  <img src={el.paperSrc} className="paper-img" />
-                  <div className="letter-text" style={{ fontFamily: el.font }}>
-                    {el.text}
-                  </div>
-                </div>
-              ) : (
-                <img src={el.src} draggable={false} />
-              )}
-
-              {activeId === el.id && (
-                <div className="item-controls" onMouseDown={(e) => e.stopPropagation()}>
-                  <button onClick={() => rotate(el.id, -15)}>⟲</button>
-                  <button onClick={() => rotate(el.id, 15)}>⟳</button>
-                  <button onClick={() => scaleItem(el.id, 0.1)}>＋</button>
-                  <button onClick={() => scaleItem(el.id, -0.1)}>－</button>
-                  <button onClick={() => bringForward(el.id)}>⬆</button>
-                  <button onClick={() => sendBackward(el.id)}>⬇</button>
-                  <button onClick={() => deleteItem(el.id)}>✕</button>
-                </div>
-              )}
-            </div>
-          ))}
-
-          <img src={selectedVase} className="vase-fixed" />
-        </div>
-      </main>
-
-      {/* RIGHT PANEL */}
-      <aside className="right-panel">
-        <h2>Letter</h2>
-
-        <h4>Choose Paper</h4>
-        <div className="paper-grid">
-          {PAPERS.map((p) => (
-            <img
-              key={p.name}
-              src={p.src}
-              className={paper.name === p.name ? "active" : ""}
-              onClick={() => setPaper(p)}
-            />
-          ))}
-        </div>
-
-        <div className="font-dropdown">
-          <div
-            className="font-selected"
-            style={{ fontFamily: font }}
-            onClick={() => setFontOpen(!fontOpen)}
-          >
-            {font} ▾
-          </div>
-
-          {fontOpen && (
-            <div className="font-options">
-              {FONTS.map((f) => (
-                <div
-                  key={f}
-                  className="font-option"
-                  style={{ fontFamily: f }}
-                  onClick={() => {
-                    setFont(f);
-                    setFontOpen(false);
-                  }}
-                >
-                  {f}
-                </div>
+          <h3>Vases</h3>
+          <div className="library-scroll">
+            <div className="item-grid">
+              {vases.map((v) => (
+                <img
+                  key={v}
+                  src={v}
+                  className={selectedVase === v ? "active" : ""}
+                  onClick={() => setSelectedVase(v)}
+                />
               ))}
             </div>
-          )}
-        </div>
+          </div>
 
-        <textarea
-          value={letterText}
-          onChange={(e) => setLetterText(e.target.value)}
-          placeholder="Write your letter..."
-          style={{ fontFamily: font }}
-        />
+          <h3>Flowers</h3>
+          <div className="library-scroll">
+            <div className="item-grid">
+              {flowers.map((f) => (
+                <img
+                  key={f}
+                  src={f}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, f)}
+                />
+              ))}
+            </div>
+          </div>
 
-        <button onClick={addLetterToCanvas}>Add it to Canvas</button>
+          <h3>Leaves</h3>
+          <div className="library-scroll">
+            <div className="item-grid">
+              {leaves.map((l) => (
+                <img
+                  key={l}
+                  src={l}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, l)}
+                />
+              ))}
+            </div>
+          </div>
 
-        <div className="button-group">
-          <button onClick={resetCanvas}>Reset</button>
-          <button onClick={exportPNG}>Save as PNG</button>
-        </div>
-      </aside>
+          <h3>Decor</h3>
+          <div className="library-scroll">
+            <div className="item-grid">
+              {decor.map((d) => (
+                <img
+                  key={d}
+                  src={d}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, d)}
+                />
+              ))}
+            </div>
+          </div>
+        </aside>
+
+        {/* CANVAS */}
+        <main className="canvas-area">
+          <div
+            className="canvas"
+            ref={canvasRef}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={handleDrop}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            onMouseDown={() => setActiveId(null)}
+          >
+            {elements.map((el) => (
+              <div
+                key={el.id}
+                className={`canvas-item-wrapper ${
+                  activeId === el.id ? "active" : ""
+                }`}
+                style={{
+                  left: el.x,
+                  top: el.y,
+                  zIndex: el.zIndex,
+                  transform: `rotate(${el.rotation}deg) scale(${el.scale})`,
+                }}
+                onMouseDown={(e) => handleMouseDown(e, el.id)}
+              >
+                {el.type === "letter" ? (
+                  <div className="letter-wrapper">
+                    <img src={el.paperSrc} className="paper-img" />
+                    <div
+                      className="letter-text"
+                      style={{ fontFamily: el.font }}
+                    >
+                      {el.text}
+                    </div>
+                  </div>
+                ) : (
+                  <img src={el.src} draggable={false} />
+                )}
+
+                {activeId === el.id && (
+                  <div
+                    className="item-controls"
+                    onMouseDown={(e) => e.stopPropagation()}
+                  >
+                    <button onClick={() => rotate(el.id, -15)}>⟲</button>
+                    <button onClick={() => rotate(el.id, 15)}>⟳</button>
+                    <button onClick={() => scaleItem(el.id, 0.1)}>＋</button>
+                    <button onClick={() => scaleItem(el.id, -0.1)}>－</button>
+                    <button onClick={() => bringForward(el.id)}>⬆</button>
+                    <button onClick={() => sendBackward(el.id)}>⬇</button>
+                    <button onClick={() => deleteItem(el.id)}>✕</button>
+                  </div>
+                )}
+              </div>
+            ))}
+
+            <img src={selectedVase} className="vase-fixed" />
+          </div>
+        </main>
+
+        {/* RIGHT PANEL */}
+        <aside className="right-panel">
+          <h2>Letter</h2>
+
+          <h4>Choose Paper</h4>
+          <div className="paper-grid">
+            {PAPERS.map((p) => (
+              <img
+                key={p.name}
+                src={p.src}
+                className={paper.name === p.name ? "active" : ""}
+                onClick={() => setPaper(p)}
+              />
+            ))}
+          </div>
+
+          <div className="font-dropdown">
+            <div
+              className="font-selected"
+              style={{ fontFamily: font }}
+              onClick={() => setFontOpen(!fontOpen)}
+            >
+              {font} ▾
+            </div>
+
+            {fontOpen && (
+              <div className="font-options">
+                {FONTS.map((f) => (
+                  <div
+                    key={f}
+                    className="font-option"
+                    style={{ fontFamily: f }}
+                    onClick={() => {
+                      setFont(f);
+                      setFontOpen(false);
+                    }}
+                  >
+                    {f}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <textarea
+            value={letterText}
+            onChange={(e) => setLetterText(e.target.value)}
+            placeholder="Write your letter..."
+            style={{ fontFamily: font }}
+          />
+
+          <button onClick={addLetterToCanvas}>Add it to Canvas</button>
+
+          <div className="button-group">
+            <button onClick={resetCanvas}>Reset</button>
+            <button onClick={exportPNG}>Save as PNG</button>
+          </div>
+        </aside>
+      </div>
     </div>
   );
 }
