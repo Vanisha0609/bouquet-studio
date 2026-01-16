@@ -59,6 +59,10 @@ body {
   position: absolute;
   cursor: grab;
 }
+.canvas-item-wrapper.active {
+  outline: 2px dashed #ff9ecb;
+  outline-offset: 4px;
+}
 
 .canvas-item-wrapper img {
   width: 100px;
@@ -66,10 +70,12 @@ body {
 
 /* CONTROLS */
 .item-controls {
+  position: absolute;
+  top: -36px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   gap: 4px;
-  justify-content: center;
-  margin-top: 4px;
 }
 
 .item-controls button {
@@ -179,18 +185,25 @@ button {
 }
 
 .paper-img {
-  width: 260px;
+  width: 320px;
+  height: auto;
   pointer-events: none;
 }
 
 .letter-text {
   position: absolute;
-  top: 40px;
-  left: 30px;
-  width: 200px;
-  font-size: 18px;
-  line-height: 1.6;
+
+  /* positioning inside paper */
+  inset: 16% 12% 14% 12%;
+
+  font-size: 0.3rem;
+  line-height: 1.35;
+
   white-space: pre-wrap;
+  word-break: break-word;
+  overflow: hidden;
+
   color: #5a3a3a;
   pointer-events: none;
+  user-select: none;
 }

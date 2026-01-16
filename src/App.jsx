@@ -15,7 +15,7 @@ export default function App() {
   const PAPERS = [
     { name: "Pink Bow", src: "/assets/papers/paper1.jpg" },
     { name: "Vintage Lines", src: "/assets/papers/paper2.png" },
-    { name: "Floral Border", src: "/assets/papers/paper3.png" },
+    { name: "Floral Border", src: "/assets/papers/paper3.jpg" },
     { name: "Soft Beige", src: "/assets/papers/paper4.png" },
   ];
 
@@ -37,8 +37,8 @@ export default function App() {
 
   const decor = [
     "/assets/decor/heart.png",
-    "/assets/decor/ribbon.png",
-    "/assets/decor/star.png",
+    "/assets/decor/bow.png",
+    "/assets/decor/sparkle.png",
   ];
 
   /* State */
@@ -169,6 +169,7 @@ export default function App() {
         zIndex: prev.length + 1,
       },
     ]);
+    //setLetterText("");
   };
 
   /* Reset */
